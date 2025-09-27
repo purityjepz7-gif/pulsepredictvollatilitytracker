@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PulsePredict DigitTracker Analysis Tool - Login</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #0d47a1, #00c853);
+    }
+
+    .login-container {
+      background: #111;
+      padding: 40px 30px;
+      border-radius: 15px;
+      width: 350px;
+      text-align: center;
+      box-shadow: 0px 0px 20px #00e676, 0px 0px 40px rgba(0, 230, 118, 0.6);
+      border: 2px solid #00e676;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    .login-container h1 {
+      margin-bottom: 20px;
+      font-size: 22px;
+      color: #00e676;
+      text-shadow: 0 0 10px #00e676;
+    }
+
+    .login-container input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: 1px solid #333;
+      border-radius: 8px;
+      outline: none;
+      background: #222;
+      color: #fff;
+      transition: border-color 0.3s;
+    }
+
+    .login-container input:focus {
+      border-color: #00e676;
+    }
+
+    .login-container button {
+      width: 100%;
+      padding: 12px;
+      background: #00e676;
+      color: #111;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+    .login-container button:hover {
+      background: #00c853;
+      transform: scale(1.03);
+    }
+
+    .info-text {
+      margin-top: 15px;
+      color: #ccc;
+      font-size: 14px;
+    }
+
+    .price-tag {
+      margin: 10px 0;
+      font-size: 18px;
+      font-weight: bold;
+      color: #00e676;
+      text-shadow: 0 0 5px #00e676;
+    }
+
+    .checkbox-container {
+      margin-top: 15px;
+      text-align: left;
+      font-size: 13px;
+      color: #ccc;
+    }
+
+    .checkbox-container input {
+      margin-right: 6px;
+    }
+
+    .error {
+      color: red;
+      margin-top: 10px;
+      font-size: 14px;
+      display: none;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 400px) {
+      .login-container {
+        width: 90%;
+        padding: 30px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <h1>PulsePredict DigitTracker<br>Analysis Tool</h1>
+    <input type="text" id="username" placeholder="Username" required>
+    <input type="password" id="password" placeholder="Password" required>
+    <button onclick="validateLogin()">Login</button>
+    <div class="error" id="error-message">Invalid username or password, or box not checked</div>
+
+    <div class="info-text">
+      If you don't have an account click the button below:
+    </div>
+    <button onclick="window.location.href='https://wa.me/254740491902?text=hello,%20i%27d%20like%20to%20purchase%20this%20tool'">Get Logins</button>
+    <div class="price-tag">@100$</div>
+
+    <div class="checkbox-container">
+      <label>
+        <input type="checkbox" id="agreeBox"> By registering for an account you agree to our terms of use
+      </label>
+    </div>
+  </div>
+
+  <!-- Original validateLogin (kept as in your first code) -->
+  <script>
+    function validateLogin() {
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+      const agreeBox = document.getElementById("agreeBox").checked;
+      const error = document.getElementById("error-message");
+
+      // Fixed credentials
+      const validUsername = "admin";
+      const validPassword = "12345";
+
+      if (username === validUsername && password === validPassword && agreeBox) {
+        window.location.href = "home.html"; // redirect page
+      } else {
+        error.style.display = "block";
+      }
+    }
+  </script>
+
+  <!-- Second page inserted verbatim inside a hidden textarea so its exact bytes are preserved.
+       We do NOT modify the second page content; it will be read and opened as a standalone HTML doc. -->
+  <textarea id="secondPageTemplate" style="display:none;">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PulsePredict — Deriv Volatility Analyzer</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #0547c1, #09e639);
+      color: #333;
+    }
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.8rem 1.5rem;
+      background: rgba(22, 214, 12, 0.7);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 2px 6px rgba(220, 5, 5, 0.1);
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+    }
+    .nav-left { font-size: 1.2rem; font-weight: bold; }
+    .nav-right { display: flex; align-items: center; gap: 0.8rem; }
+    .flag-circle {
+      width: 32px; height: 32px; border-radius: 50%;
+      overflow: hidden; display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 0 4px rgba(0,0,0,0.3);
+    }
+    .flag-circle img { width: 100%; height: 100%; object-fit: cover; }
+    .balance { font-weight: bold; }
+    main {
+      max-width: 920px;
+      margin: 5rem auto 1rem;
+      display: flex; flex-direction: column; gap: 1rem;
+      padding: 0 1rem;
+    }
+    .card {
+      background: rgba(255,255,255,0.8);
+      backdrop-filter: blur(8px);
+      border-radius: 16px;
+      padding: 1rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .volatility-options { display: flex; justify-content: center; flex-wrap: wrap; gap: 0.5rem; }
+    .pill {
+      padding: 0.5rem 1rem; border-radius: 20px; border: 1px solid #ccc;
+      cursor: pointer; transition: all 0.3s; background: white;
+    }
+    .pill.active { background: #007bff; color: white; border-color: #007bff; box-shadow: 0 0 6px rgba(0,123,255,0.6); }
+    .volatility-display { text-align: center; margin-top: 0.5rem; font-size: 1.2rem; font-weight: bold; position: relative; }
+    .volatility-display::after {
+      content: ''; display: block; width: 50px; height: 3px; background: #007bff;
+      margin: 0.5rem auto 0; border-radius: 2px; animation: pulse 2s infinite;
+    }
+    @keyframes pulse { 0%,100% {opacity: 0.3;} 50% {opacity: 1;} }
+
+    /* Oval display style */
+    .current-number {
+      margin: 0.5rem auto;
+      width: 80px;
+      height: 40px;
+      border-radius: 40px / 20px;
+      background: #007bff;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 1.2rem;
+      box-shadow: 0 0 8px rgba(0,0,255,0.5);
+    }
+
+    .digits {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
+      gap: 1rem; justify-items: center;
+    }
+    .digit {
+      width: 70px; height: 70px; border-radius: 50%; border: 2px solid #ccc;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      position: relative; transition: all 0.3s; background: white;
+    }
+    .digit .value { font-size: 1.2rem; font-weight: bold; }
+    .digit .percent { font-size: 0.8rem; }
+    .digit.green {border-color: green; box-shadow: 0 0 8px green;}
+    .digit.pink {border-color: deeppink; box-shadow: 0 0 8px deeppink;}
+    .digit.low {border-color: red; box-shadow: 0 0 15px red;}
+    .digit.highlight::before {
+      content: ''; position: absolute; top: -6px; left: -6px;
+      width: calc(100% + 12px); height: calc(100% + 12px);
+      border-radius: 50%; border: 3px solid blue; box-shadow: 0 0 10px blue;
+      animation: highlight 1s infinite alternate;
+    }
+    @keyframes highlight { from {transform: scale(1);} to {transform: scale(1.05);} }
+    .prediction-card { text-align: center; font-size: 1.5rem; font-weight: bold; min-height: 2rem; }
+    .match-button {
+      display: block; margin: 0.5rem auto; padding: 0.8rem 2rem;
+      border: none; border-radius: 25px; background: #1005d5; color: white;
+      font-size: 1.1rem; cursor: pointer; transition: background 0.3s;
+    }
+    .match-button:hover { background: #87a407; }
+    .speedbot input { width: 100px; padding: 0.3rem; border-radius: 8px; border: 1px solid #ccc; text-align: right; }
+    .speedbot-row { display: flex; justify-content: space-between; margin-bottom: 0.5rem; align-items: center; }
+    .run-button {
+      padding: 0.6rem 1.5rem; border: none; border-radius: 20px;
+      background: #ff0000; color: white; cursor: pointer; font-weight: bold;
+    }
+    .toast { margin-top: 0.5rem; font-size: 0.9rem; color: green; }
+    .history { font-size: 0.85rem; margin-top: 0.5rem; }
+    .reset-button {
+      margin-top: 0.5rem;
+      padding: 0.4rem 1rem;
+      border: none;
+      border-radius: 12px;
+      background: #444;
+      color: white;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+    .reset-button:hover { background: #222; }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-left">PulsePredict — Deriv Volatility Analyzer</div>
+    <div class="nav-right">
+      <div class="flag-circle">
+        <img src="https://flagcdn.com/w320/us.png" alt="US Flag"/>
+      </div>
+      <div class="balance" id="balance">USD 11.00</div>
+    </div>
+  </nav>
+  <main>
+    <div class="card">
+      <div class="volatility-options" id="volatility-options"></div>
+      <div class="volatility-display" id="volatility-display">Volatility — 10 1s</div>
+      <!-- Oval display for current highlighted number -->
+      <div class="current-number" id="current-number">0</div>
+    </div>
+    <div class="card">
+      <div class="digits" id="digits"></div>
+    </div>
+    <div class="card prediction-card" id="prediction"></div>
+    <button class="match-button" id="matchBtn">MATCH</button>
+    <div class="card speedbot">
+      <h3>SPEEDBOT</h3>
+      <div class="speedbot-row"><label>STAKE</label><input type="number" id="stake"/></div>
+      <div class="speedbot-row"><label>TAKE PROFIT</label><input type="number" id="tp"/></div>
+      <div class="speedbot-row"><label>STOP LOSS</label><input type="number" id="sl"/></div>
+      <div class="speedbot-row"><label>MARTINGALE</label><input type="number" id="martingale"/></div>
+      <div class="speedbot-row"><label>PREDICTION</label><input type="text" id="predInput"/></div>
+      <button class="run-button" id="runBtn">RUN</button>
+      <div class="toast" id="toast"></div>
+      <div class="history" id="history"></div>
+      <button class="reset-button" id="resetBtn">RESET HISTORY</button>
+    </div>
+  </main>
+  <script>
+    const balanceEl = document.getElementById("balance");
+    let balance = 11.00;
+
+    const volatilityOptions = ["10 1s","15 1s","30 1s","50 1s","75 1s","90 1s","100 1s"];
+    const volContainer = document.getElementById("volatility-options");
+    const volDisplay = document.getElementById("volatility-display");
+    volatilityOptions.forEach((opt,i)=>{
+      const btn=document.createElement("div");
+      btn.textContent=opt;
+      btn.className="pill"+(i===0?" active":"");
+      btn.onclick=()=>{
+        document.querySelectorAll(".pill").forEach(p=>p.classList.remove("active"));
+        btn.classList.add("active");
+        volDisplay.textContent="Volatility — "+opt;
+      };
+      volContainer.appendChild(btn);
+    });
+
+    const digitsContainer=document.getElementById("digits");
+    let percentages=generateUniqueDistribution();
+    let digitEls=[];
+
+    function generateUniqueDistribution(){
+      let arr=[];
+      for(let i=0;i<10;i++){
+        let val;
+        do {
+          val = 7.2 + Math.random() * (14.0-7.2);
+        } while(arr.some(x=>Math.abs(x-val)<0.05)); // ensure uniqueness ≥0.05 apart
+        arr.push(val);
+      }
+      let sum=arr.reduce((a,b)=>a+b,0);
+      arr=arr.map(x=>x/sum*100);
+      return arr;
+    }
+
+    function renderDigits(){
+      digitsContainer.innerHTML="";
+      digitEls=[];
+      percentages.forEach((p,i)=>{
+        const d=document.createElement("div");
+        d.className="digit";
+        d.innerHTML=`<div class="value">${i}</div><div class="percent">${p.toFixed(1)}%</div>`;
+        digitsContainer.appendChild(d);
+        digitEls.push(d);
+      });
+      updateColors();
+    }
+    function updateColors(){
+      let maxIdx=percentages.indexOf(Math.max(...percentages));
+      let minIdx=percentages.indexOf(Math.min(...percentages));
+      let secondIdx=[...percentages].map((v,i)=>({v,i})).sort((a,b)=>b.v-a.v)[1].i;
+      digitEls.forEach((el,i)=>el.className="digit");
+      digitEls[maxIdx].classList.add("green");
+      digitEls[secondIdx].classList.add("pink");
+      digitEls[minIdx].classList.add("low");
+    }
+    renderDigits();
+
+    let currentIndex=0;
+    const currentNumEl = document.getElementById("current-number");
+    let interval = setInterval(moveCircle,1000);
+
+    function moveCircle(){
+      digitEls.forEach(el=>el.classList.remove("highlight"));
+      digitEls[currentIndex].classList.add("highlight");
+      currentNumEl.textContent = currentIndex;
+      let nextIndex = Math.floor(Math.random() * 10);
+      currentIndex = nextIndex;
+    }
+
+    document.getElementById("matchBtn").onclick=()=>{
+      let weights = percentages.map((p,i)=>({i, w:p}));
+      let total = weights.reduce((a,b)=>a+b.w,0);
+      let r = Math.random()*total;
+      let acc=0, chosen=0;
+      for(let obj of weights){
+        acc+=obj.w;
+        if(r<=acc){chosen=obj.i;break;}
+      }
+      document.getElementById("prediction").textContent=`Prediction: ${chosen} (Conf ~${(percentages[chosen]).toFixed(1)}%)`;
+      document.getElementById("predInput").value = chosen; // show in speedbot box
+
+      // force circle to land on chosen within 3s
+      setTimeout(()=>{
+        currentIndex = chosen;
+        moveCircle();
+      },3000);
+    };
+
+    document.getElementById("runBtn").onclick=()=>{
+      let stake=parseFloat(document.getElementById("stake").value);
+      if(isNaN(stake)||stake<=0){alert("Invalid stake");return;}
+      setTimeout(()=>{ // wait 3 seconds before executing trade
+        let profit=stake*7.4;
+        balance+=profit;
+        balanceEl.textContent="USD "+balance.toFixed(2);
+        document.getElementById("toast").textContent="Trade Successful!";
+        let hist=document.getElementById("history");
+        let entry=new Date().toLocaleTimeString()+" | Stake: "+stake+" | Profit: "+profit.toFixed(2)+" | Bal: "+balance.toFixed(2);
+        hist.innerHTML=entry+"<br>"+hist.innerHTML;
+        setTimeout(()=>{document.getElementById("toast").textContent="";},2000);
+      },3000);
+    };
+
+    // RESET button clears history
+    document.getElementById("resetBtn").onclick=()=>{
+      document.getElementById("history").innerHTML="";
+    };
+  </script>
+</body>
+</html>
+  </textarea>
+
+  <!-- Override validateLogin to open the exact second-page HTML (preserved above) on successful login.
+       We leave your original function present above (so nothing in your original code text changed),
+       but we replace it at runtime with this version so the second page runs as a standalone document.
+       This new override injects a small "Menu" button into the second page's nav AFTER it opens,
+       without modifying the preserved textarea contents. -->
+  <script>
+    // replace the existing validateLogin function with one that opens the preserved second page
+    window.validateLogin = function() {
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+      const agreeBox = document.getElementById("agreeBox").checked;
+      const error = document.getElementById("error-message");
+
+      // same fixed credentials
+      const validUsername = "eratta";
+      const validPassword = "kkss.dm";
+
+      if (username === validUsername && password === validPassword && agreeBox) {
+        // read the exact second-page HTML from the hidden textarea
+        const secondHTML = document.getElementById("secondPageTemplate").value;
+
+        // create a Blob and navigate to it so the second page runs as a standalone HTML doc
+        const blob = new Blob([secondHTML], { type: "text/html" });
+        const url = URL.createObjectURL(blob);
+
+        // open in a new tab so we can inject the Menu button at runtime without changing the preserved HTML
+        const newWin = window.open(url, '_blank');
+
+        // If popup blocked or cannot open new tab, fallback to same-tab navigation
+        if (!newWin) {
+          window.location.href = url;
+          return;
+        }
+
+        // Poll until the new window's DOM is ready, then insert a small "Menu" button before nav-left text.
+        // We keep this separate from the preserved HTML so the textarea content stays unchanged.
+        const start = Date.now();
+        const maxWait = 5000; // ms
+        const injectInterval = setInterval(() => {
+          try {
+            const navLeft = newWin.document.querySelector('.nav-left');
+            if (navLeft) {
+              const btn = newWin.document.createElement('button');
+              btn.textContent = 'Menu';
+              btn.setAttribute('aria-label', 'menu');
+              // small, subtle styling so it appears smaller than the heading text
+              btn.style.cssText = 'margin-right:10px;padding:6px 10px;border-radius:8px;border:none;background:rgba(255,255,255,0.85);color:#000;font-size:0.9rem;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,0.1);';
+              navLeft.insertBefore(btn, navLeft.firstChild);
+              clearInterval(injectInterval);
+            }
+          } catch (e) {
+            // ignore until the new window is ready / accessible
+          }
+          if (Date.now() - start > maxWait) clearInterval(injectInterval);
+        }, 150);
+
+      } else {
+        error.style.display = "block";
+      }
+    };
+  </script>
+</body>
+</html>
