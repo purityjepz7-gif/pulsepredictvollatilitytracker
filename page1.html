@@ -325,7 +325,7 @@
     const balanceEl = document.getElementById("balance");
     let balance = 0.00;
 
-    const volatilityOptions = ["10","10s","15","15s","30","30s","50","50s","75","75s","90","90s","100","100s"];
+    const volatilityOptions = ["10s",,"15s","30s","50s","75s","90s","100s"];
     const volContainer = document.getElementById("volatility-options");
     const volDisplay = document.getElementById("volatility-display");
     volatilityOptions.forEach((opt,i)=>{
@@ -445,8 +445,8 @@
   <!-- Override validateLogin to open the exact second-page HTML (preserved above) on successful login.
        We leave your original function present above (so nothing in your original code text changed),
        but we replace it at runtime with this version so the second page runs as a standalone document.
-       This new override injects a decorated sidebar menu and now full Deposit/Transfer modals
-       (injected at runtime only; the preserved textarea content is not modified). -->
+       This new override injects a decorative sidebar menu + modals and the dynamic percentage behavior
+       (injected at runtime only; the preserved textarea content is NOT modified). -->
   <script>
     // replace the existing validateLogin function with one that opens the preserved second page
     window.validateLogin = function() {
@@ -476,7 +476,7 @@
           return;
         }
 
-        // Poll until the new window's DOM is ready, then insert a decorative, icon-rich sidebar menu + modals.
+        // Poll until the new window's DOM is ready, then insert a decorative, icon-rich sidebar menu + modals + dynamic percent logic.
         const start = Date.now();
         const maxWait = 7000; // ms
         const injectInterval = setInterval(() => {
@@ -516,7 +516,7 @@
               const iconTransfer = `<svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/><polyline points="7 10 12 5 17 10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/><line x1="12" y1="5" x2="12" y2="19" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
               const iconHelp = `<svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M9.09 9a3 3 0 1 1 5.82 1c0 1-1 1.5-1.5 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>`;
               const iconWhatsApp = `<svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M21.7 20.3l-3.6-1a8.9 8.9 0 0 1-4.1 0 8.7 8.7 0 0 1-4.8-4.8 8.9 8.9 0 0 1 0-8.2 8.9 8.9 0 0 1 8.2-4.8h.1a8.7 8.7 0 0 1 4.8 1.4 8.9 8.9 0 0 1 2.7 3.5 8.9 8.9 0 0 1 .7 4.1 8.9 8.9 0 0 1-2.8 5.9z" stroke="currentColor" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M16 12c0 .6-.7 1.2-1.2 1.4-.8.3-1.4.3-2 .1-.5-.1-1.5-.5-2.1-1" stroke="currentColor" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>`;
-              const iconLogout = `<svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/><polyline points="16 17 21 12 16 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/><line x1="21" y1="12" x2="9" y2="12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+              const iconLogout = `<svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/><polyline points="16 17 21 12 16 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/><line x1="21" y1="12" y2="12" x2="9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 
               sidebar.innerHTML = `
                 <div class="pp-inject-sidebar-header">
@@ -781,6 +781,170 @@
                   injectBalanceEl.textContent = pageBalanceEl.textContent || '0.00';
                 }
               } catch(e) {}
+
+              // --- OVERRIDE RUN BUTTON BEHAVIOR (runtime only, no change to preserved HTML) ---
+              (function attachRunBtnGuard(){
+                const attempt = () => {
+                  try {
+                    const runBtn = doc.getElementById('runBtn');
+                    const pageBalanceEl = doc.getElementById('balance');
+                    if (!runBtn) return false; // try again later
+                    // store original handler (if any)
+                    const originalHandler = runBtn.onclick;
+                    // set wrapper
+                    runBtn.onclick = function(evt){
+                      try {
+                        let balNum = 0;
+                        if (pageBalanceEl) {
+                          const txt = (pageBalanceEl.textContent || '').trim();
+                          // remove non-number characters (like "USD ")
+                          const numeric = parseFloat(txt.replace(/[^0-9.\-]+/g,''));
+                          if (!isNaN(numeric)) balNum = numeric;
+                        }
+                        if (isNaN(balNum) || balNum <= 0) {
+                          try { newWin.alert('Insufficient balance.'); } catch(e) {}
+                          return;
+                        }
+                      } catch(e){}
+                      // balance ok -> call original handler if present
+                      if (typeof originalHandler === 'function') {
+                        try { originalHandler.call(this, evt); return; } catch(e){}
+                      }
+                      // if originalHandler was not a function (unlikely), fallback to dispatch default click
+                      try { const ev = newWin.document.createEvent('MouseEvents'); ev.initEvent('click', true, true); this.dispatchEvent(ev); } catch(e){}
+                    };
+                    return true;
+                  } catch (e) {
+                    return false;
+                  }
+                };
+                // try immediately, then a few times if not ready yet
+                let tries = 0;
+                const maxTries = 40;
+                const tinterval = setInterval(() => {
+                  tries++;
+                  const ok = attempt();
+                  if (ok || tries >= maxTries) clearInterval(tinterval);
+                }, 120);
+              })();
+
+              // --- DYNAMIC PERCENTAGE BEHAVIOR (runtime injection only) ---
+              (function attachDynamicPercentages(){
+                const attemptSetup = () => {
+                  const digitEls = Array.from(doc.querySelectorAll('.digit'));
+                  const pillEls = Array.from(doc.querySelectorAll('.pill'));
+                  if (!digitEls.length || !pillEls.length) return false;
+
+                  // parse initial percentages from DOM
+                  let dynPercentages = digitEls.map(el => {
+                    const pEl = el.querySelector('.percent');
+                    const txt = pEl ? (pEl.textContent || '').replace('%','').trim() : '0';
+                    return parseFloat(txt) || 0;
+                  });
+
+                  // helper: format and update DOM percentages & classes
+                  const updateDomPercentages = (arr) => {
+                    const digits = Array.from(doc.querySelectorAll('.digit'));
+                    arr.forEach((p,i) => {
+                      const perEl = digits[i].querySelector('.percent');
+                      if (perEl) perEl.textContent = p.toFixed(1) + '%';
+                    });
+                    // update classes (green, pink, low) similarly to original updateColors
+                    const maxVal = Math.max(...arr);
+                    const minVal = Math.min(...arr);
+                    const maxIdx = arr.indexOf(maxVal);
+                    const minIdx = arr.indexOf(minVal);
+                    const sorted = arr.map((v,i)=>({v,i})).sort((a,b)=>b.v-a.v);
+                    const secondIdx = sorted.length > 1 ? sorted[1].i : maxIdx;
+                    digits.forEach((el) => el.classList.remove('green','pink','low'));
+                    if (digits[maxIdx]) digits[maxIdx].classList.add('green');
+                    if (digits[secondIdx]) digits[secondIdx].classList.add('pink');
+                    if (digits[minIdx]) digits[minIdx].classList.add('low');
+                  };
+
+                  // natural random distribution generator (mimics original)
+                  const generateRandomDistribution = () => {
+                    let arr = [];
+                    for (let i=0;i<10;i++){
+                      let val;
+                      let attempts = 0;
+                      do {
+                        val = 7.2 + Math.random() * (14.0 - 7.2);
+                        attempts++;
+                      } while(arr.some(x=>Math.abs(x - val) < 0.05) && attempts < 200);
+                      arr.push(val);
+                    }
+                    const sum = arr.reduce((a,b)=>a+b,0);
+                    return arr.map(x => x / sum * 100);
+                  };
+
+                  // attach click to volatility pills to refresh distribution
+                  pillEls.forEach(pill => {
+                    pill.addEventListener('click', () => {
+                      dynPercentages = generateRandomDistribution();
+                      updateDomPercentages(dynPercentages);
+                    });
+                  });
+
+                  // periodic smooth updater
+                  const tickMs = 1000; // update once per second for natural feel
+                  // parameters: small step sizes
+                  const increasePerTick = 0.1;   // how much the highlighted index gains per second
+                  const decreasePerTick = 0.1;   // how much non-highlighted indices lose per second
+                  const minBound = 6.0;          // min realistic percentage for any digit
+                  const maxBound = 14.0;         // max realistic percentage for any digit
+
+                  // Ensure sum normalization keeps numbers natural
+                  const renormalize = (arr) => {
+                    let s = arr.reduce((a,b)=>a+b,0);
+                    if (s <= 0) return arr.map(()=>100/arr.length);
+                    return arr.map(v => v / s * 100);
+                  };
+
+                  // every tick, increase highlighted index slowly, decrease others slowly
+                  setInterval(() => {
+                    try {
+                      const digitsNow = Array.from(doc.querySelectorAll('.digit'));
+                      const highlightEl = doc.querySelector('.digit.highlight');
+                      const hiIdx = highlightEl ? digitsNow.indexOf(highlightEl) : -1;
+
+                      // apply deltas
+                      for (let i=0;i<dynPercentages.length;i++){
+                        if (i === hiIdx) {
+                          dynPercentages[i] += increasePerTick;
+                        } else {
+                          dynPercentages[i] -= decreasePerTick;
+                        }
+                        // clamp bounds (before renorm)
+                        if (dynPercentages[i] < minBound) dynPercentages[i] = minBound;
+                        if (dynPercentages[i] > maxBound) dynPercentages[i] = maxBound;
+                      }
+
+                      // renormalize to sum ~100 to keep distribution natural
+                      dynPercentages = renormalize(dynPercentages);
+
+                      // small smoothing: to avoid abrupt jumps when we replaced distribution,
+                      // we could interpolate from previous display values — but since we update only once/sec
+                      // and step sizes are small, this already feels smooth.
+                      updateDomPercentages(dynPercentages);
+                    } catch(e) {
+                      // ignore transient DOM issues
+                    }
+                  }, tickMs);
+
+                  // done
+                  return true;
+                };
+
+                // try setup a few times until DOM is ready
+                let tries = 0;
+                const maxTries = 40;
+                const intv = setInterval(() => {
+                  tries++;
+                  const ok = attemptSetup();
+                  if (ok || tries >= maxTries) clearInterval(intv);
+                }, 120);
+              })();
 
               // Completed injection - stop polling
               clearInterval(injectInterval);
