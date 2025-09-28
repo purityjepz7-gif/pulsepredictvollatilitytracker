@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Sharon — Heart Assembly Animation</title>
+  <style>
+    :root{
+      --bg-1: #020204;
+      --bg-2: #070608;
+      --gold: #9acd32; /* golden green */
+      --gold-2: #6bff6b;
+      --tear-blue: #5cc3ff;
+      --break-red: #ff2b2b;
+    }
+
+    html,body{
+      height:100%;margin:0;padding:0;background:radial-gradient(1200px 600px at 10% 10%, #0b0b0b 0%, var(--bg-2) 25%, var(--bg-1) 60%);
+      color:var(--gold);font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;
+      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; overflow:hidden;
+    }
+
+    .stage{position:relative;width:100vw;height:100vh;overflow:hidden}
+    #heartLayer{position:absolute;left:0;top:0;width:100%;height:100%;}
+
+    .name{
+      position:absolute;display:inline-block;white-space:nowrap;pointer-events:none;user-select:none;
+      color:var(--gold);font-weight:800;letter-spacing:0.6px;padding:2px 6px;border-radius:4px;
+      text-shadow:0 0 6px rgba(154,205,50,0.9),0 0 12px rgba(107,255,107,0.85),0 6px 18px rgba(100,200,60,0.12),0 18px 40px rgba(60,180,60,0.06);
+      transition: left 1.6s cubic-bezier(.2,.8,.2,1), top 1.6s cubic-bezier(.2,.8,.2,1), transform 1.6s, color 1s, text-shadow 1s;
+      will-change:left,top,transform,opacity,color,text-shadow;
+      opacity:0;
+    }
+    .assembled .name{text-shadow:0 0 8px rgba(154,255,120,0.95),0 0 18px rgba(107,255,107,0.9),0 12px 30px rgba(100,200,60,0.12),0 24px 60px rgba(60,180,60,0.06);}
+
+    .rotate-names .name{animation: names-rotate 12s linear infinite;}
+    @keyframes names-rotate{0%{transform:rotate(0deg);}100%{transform:rotate(360deg);}}
+
+    .broken .name{
+      color: var(--break-red) !important;
+      text-shadow:0 0 8px rgba(255,60,60,0.95),0 0 18px rgba(255,60,60,0.9),0 12px 30px rgba(255,60,60,0.25),0 24px 60px rgba(255,0,0,0.2);
+      animation: redPulse 2s infinite;
+    }
+
+    @keyframes redPulse {
+      0%,100% { text-shadow:0 0 6px rgba(255,60,60,0.7),0 0 12px rgba(255,60,60,0.6),0 0 20px rgba(255,0,0,0.4); }
+      50% { text-shadow:0 0 14px rgba(255,80,80,1),0 0 28px rgba(255,0,0,0.9),0 0 40px rgba(255,0,0,0.6); }
+    }
+
+    .tear{position:absolute;border-radius:50%;background: radial-gradient(circle at 30% 20%, rgba(190,234,255,0.95) 0%, var(--tear-blue) 40%, rgba(20,120,255,0.08) 100%);
+      box-shadow:0 0 10px rgba(92,195,255,0.9),0 6px 18px rgba(12,90,160,0.12);opacity:0.95;z-index:5;}
+    @keyframes drop{0%{ transform: translateY(-10px); opacity:1 }65%{ opacity:1 }100%{ transform: translateY(260px) rotate(18deg); opacity:0 }}
+
+    .hint{position:fixed;right:18px;bottom:18px;font-size:12px;color:rgba(255,255,255,0.12);z-index:20;}
+    .floor-glow{position:absolute;left:50%;transform:translateX(-50%);bottom:-6%;width:120%;height:40%;background:radial-gradient(ellipse at center, rgba(154,205,50,0.03) 0%, transparent 40%);pointer-events:none;filter:blur(18px);}
+    @media (max-width:600px){ .name{ font-size:16px } }
+  </style>
+</head>
+<body>
+  <div class="stage">
+    <div id="heartLayer"></div>
+    <div class="floor-glow"></div>
+    <div class="hint">Click anywhere to restart</div>
+  </div>
+  <script>
+    const COUNT = 80;
+    const container = document.getElementById('heartLayer');
+    const names = [];
+    const vw = () => innerWidth; const vh = () => innerHeight;
+
+    function createNames(){
+      for(let i=0;i<COUNT;i++){
+        const el=document.createElement('div');
+        el.className='name';
+        el.style.fontSize=(14+Math.random()*12)+'px';
+        el.innerHTML='❤my shazzy❤';
+        container.appendChild(el);
+        names.push(el);
+      }
+    }
+
+    function placeInitialOnFloor(){
+      const floorTop=Math.floor(vh()*0.78);
+      names.forEach(el=>{
+        const x=Math.random()*(vw()-100);
+        const y=floorTop+Math.random()*(vh()*0.12);
+        el.style.left=x+'px'; el.style.top=y+'px';
+        el.style.opacity=1;
+      });
+    }
+
+    function heartPoints(n){
+      const pts=[];
+      for(let i=0;i<n;i++){
+        const t=(i/n)*Math.PI*2;
+        const x=16*Math.pow(Math.sin(t),3);
+        const y=13*Math.cos(t)-5*Math.cos(2*t)-2*Math.cos(3*t)-Math.cos(4*t);
+        pts.push({x,y});
+      }
+      let minX=Infinity,maxX=-Infinity,minY=Infinity,maxY=-Infinity;
+      pts.forEach(p=>{if(p.x<minX)minX=p.x;if(p.x>maxX)maxX=p.x;if(p.y<minY)minY=p.y;if(p.y>maxY)maxY=p.y;});
+      const w=maxX-minX,h=maxY-minY;
+      const scale=Math.min(vw()*0.7/w,vh()*0.6/h);
+      const cx=vw()/2,cy=vh()/2;
+      return pts.map(p=>({x:cx+(p.x-(minX+w/2))*scale,y:cy-(p.y-(minY/2))*scale}));
+    }
+
+    function assembleIntoHeart(){
+      const pts=heartPoints(names.length);
+      names.forEach((el,i)=>{
+        const target=pts[i];
+        const left=target.x-20;
+        const top=target.y-10;
+        setTimeout(()=>{
+          el.style.left=left+'px'; el.style.top=top+'px';
+          el.style.transform=`rotate(0deg)`;
+        },400+Math.random()*200);
+      });
+      setTimeout(()=>{container.classList.add('assembled');container.classList.add('rotate-names');},1800);
+      setTimeout(()=>scatterNames(),10000);
+    }
+
+    function scatterNames(){
+      const pts=heartPoints(names.length);
+      container.classList.add('broken');
+      names.forEach((el,i)=>{
+        el.innerHTML='💔bye shazzy💔😭';
+        const target=pts[i];
+        let offset=(i%2===0?-60:60);
+        el.style.transition='left 2s, top 2s, transform 2s, color 1s, text-shadow 1s';
+        el.style.left=(target.x+offset)+'px';
+        el.style.top=(target.y+Math.random()*40)+'px';
+        el.style.transform=`rotate(${(Math.random()-0.5)*60}deg)`;
+        // spawn continuous tears
+        setInterval(()=>spawnTear(el),400+Math.random()*600);
+      });
+    }
+
+    function spawnTear(el){
+      const tear=document.createElement('div');
+      tear.className='tear';
+      const rect=el.getBoundingClientRect(),parentRect=container.getBoundingClientRect();
+      tear.style.left=(rect.left-parentRect.left+rect.width/2)+'px';
+      tear.style.top=(rect.top-parentRect.top+rect.height)+'px';
+      tear.style.width='8px';tear.style.height='12px';
+      tear.style.animation=`drop ${1+Math.random()*1.5}s forwards`;
+      container.appendChild(tear);
+      setTimeout(()=>tear.remove(),2500);
+    }
+
+    window.addEventListener('load',()=>{createNames();setTimeout(placeInitialOnFloor,60);setTimeout(assembleIntoHeart,1400);document.body.addEventListener('click',()=>location.reload());});
+  </script>
+</body>
+</html>
